@@ -82,7 +82,7 @@ const forgotPassword = (req, res) => {
             html: `
                 <p>Hello ${data[0].username},</p>
                 <p>You requested a password reset. Click the link below to reset your password:</p>
-                <a href="http://localhost:3000/reset-password?token=${resetToken}">Reset Password</a>
+                <a href="https://proyectoescrache.onrender.com/reset-password?token=${resetToken}">Reset Password</a>
             `,
         };
 

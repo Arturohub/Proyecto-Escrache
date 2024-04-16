@@ -12,7 +12,7 @@ const app = express()
 
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://proyectoescrache.onrender.com/",
   credentials: true
 }));
 app.use(cookieParser())
