@@ -11,10 +11,10 @@ const path = require("path"); // Import path module
 
 const app = express();
 
-
 app.use(cors({
-  origin: ["http://localhost:3000", "https://proyectoescrache.onrender.com"],
-  credentials: true
+  origin: "https://proyectoescrache.onrender.com",
+  credentials: true,
+  exposedHeaders: ["Access-Control-Allow-Origin"]
 }));
 app.use(cookieParser());
 app.use(express.json());
