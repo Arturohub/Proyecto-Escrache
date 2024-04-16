@@ -24,7 +24,7 @@ export default function Write() {
         try {
             const formData = new FormData();
             formData.append("file", file);
-            const res = await axios.post("/upload", formData);
+            const res = await axios.post("https://proyectoescrache.onrender.com/upload", formData);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -40,13 +40,13 @@ export default function Write() {
     
         try {
           state
-            ? await axios.put(`/posts/${state.id}`, {
+            ? await axios.put(`https://proyecto-escrache.onrender.com/posts/${state.id}`, {
                 title,
                 desc: value,
                 category,
                 img: imgUrl,
               })
-            : await axios.post(`/posts/`, {
+            : await axios.post(`https://proyecto-escrache.onrender.com/posts/`, {
                 title,
                 desc: value,
                 category,

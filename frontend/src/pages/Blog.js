@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import DOMPurify from "dompurify";
 
 export default function Blog() {
     const [posts, setPosts] = useState([]);
@@ -9,7 +10,7 @@ export default function Blog() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("/posts");
+                const res = await axios.get("https://proyecto-escrache.onrender.com/posts");
                 setPosts(res.data);
             } catch (error) { 
                 setError(error.message);
@@ -37,7 +38,7 @@ export default function Blog() {
                             </div>
                             <div className="content-blog">
                             <h1>{post.title}</h1>
-                                <p>{getText(post.desc)}</p>
+                            <p>{getText(DOMPurify.sanitize(post.desc))}</p>
                                 <Link className="link-blog" to={`/post/${post.id}`}>
                                     <button>Read More</button>
                                 </Link>

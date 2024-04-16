@@ -19,7 +19,7 @@ export default function Contact() {
         };
 
         try {
-            await axios.post("http://localhost:4000/api/contact/send", postData, { withCredentials: true });
+            await axios.post("https://proyecto-escrache.onrender.com/api/contact/send", postData, { withCredentials: true });
             setError(<p className="success">Message sent. Thanks for contacting us!!</p>);
             setSubmitted(true);
         } catch (error) {

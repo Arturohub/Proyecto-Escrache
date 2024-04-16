@@ -24,7 +24,7 @@ export default function NewLive () {
         };
 
         try {
-            const response = await axios.post("/live/newlive", postData, { withCredentials: true });
+            const response = await axios.post("https://proyecto-escrache.onrender.com/live/newlive", postData, { withCredentials: true });
             setError(<p className="success">New upcoming concert sent!</p>);
             setSubmitted(true);
         } catch (error) {
@@ -47,6 +47,7 @@ export default function NewLive () {
             setError("");
             setButtonDisabled(true);
             await axiosPostData();
+            setButtonDisabled(false);
             navigate("/live")
         }
     };

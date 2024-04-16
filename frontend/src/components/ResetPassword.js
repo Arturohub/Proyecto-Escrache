@@ -15,6 +15,7 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,13 +25,16 @@ export default function ResetPassword() {
     }
 
     try {
-      const response = await axios.post('/auth/reset-password', {
+      setLoading(true);
+      const response = await axios.post('https://proyecto-escrache.onrender.com/auth/reset-password', {
         token,
         password,
       }, { withCredentials: true });
       setSuccessMessage(response.data);
     } catch (err) {
       setError(err.response.data);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,7 +46,7 @@ export default function ResetPassword() {
         <input type="password" id="password" placeholder="Enter new password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
         <label htmlFor="confirmPassword">Confirm Password:</label>
         <input type="password" placeholder="Confirm new password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-        <button type="submit">Reset Password</button>
+        <button type="submit" disabled={loading}>Reset Password</button>
         {error && <p className="forgot-error">{error}</p>}
         {successMessage && <p className="forgot-success">{successMessage}</p>}
       </form>

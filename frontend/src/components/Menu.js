@@ -8,7 +8,7 @@ export default function Menu({ category }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/posts/?category=${category}`);
+                const res = await axios.get(`https://proyecto-escrache.onrender.com/posts/?category=${category}`);
 
                 const filteredPosts = res.data.filter(post => post.category === category);
                 setPosts(filteredPosts);
