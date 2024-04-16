@@ -44,6 +44,6 @@ app.use("/api/posts", postRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/live", liveRoutes);
 
-app.listen(4000, ()=>{
+app.listen(process.env.PORT, ()=>{
   console.log("DB Connected!")
 })

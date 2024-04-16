@@ -216,7 +216,6 @@
   background-color: black;
 }
 
-
 .musicplayer{
   bottom: 0; 
   width: 100%;
@@ -239,14 +238,15 @@
   color: white; 
   cursor: pointer;
 }
+
 .button-music:hover{
   scale: 1.2;
 }
 
 .button-music svg{
   background-color: transparent;
-  
 }
+
 .song-info {
   display: flex;
   flex-direction: row;
@@ -260,6 +260,7 @@
   text-align: center;
   padding-top: 6px;
 }
+
 .song-info span{
   background-color: transparent;
   border: 1px solid #fff;
@@ -279,6 +280,7 @@
   font-style: normal;
   font-size: 4rem;
 }
+
 .shaking {
   animation: shake 0.6s infinite;
   left: 30%;
@@ -397,8 +399,6 @@
     font-size: 1.3rem;
   }
 
-
-
 }
 
 /* ########################## ABOUT ##################################*/
@@ -419,7 +419,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 }
 
 .music-icon{
@@ -501,7 +500,6 @@
     font-size: 2.5rem;
   }
 }
-
 
 
 @media (max-width: 680px) {
@@ -612,9 +610,6 @@
   border: 1px double #fff;
   transform: scale(1.15); /* Correct scale property */
 }
-
-
-
 
 @media (max-width: 880px) { 
 
@@ -753,18 +748,14 @@
 
 @media (max-width: 880px) {  
 
- 
   .content-blogpost{
     max-width: 600px;
   }
-    
-   
+       
   .info-blogpost {
-
     font-size: 1rem;
   }
 
-  
   .edit-button{
     margin-left: 300px;
     font-size: 1.95rem;
@@ -772,7 +763,6 @@
   .delete-button{
     font-size: 1.5rem;
   }
-
 }
 
 @media (max-width: 650px) { 
@@ -944,6 +934,7 @@
 }
 
 /* ########################## LIVE ##################################*/
+
 .livemain-container{
     margin-top: 100px;
 }
@@ -1088,9 +1079,6 @@
 
 .newlive-container{
   margin-top: 150px;
-
-
-
 }
 
 .newlive-container h1{
@@ -1208,7 +1196,6 @@ background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.8;
-
 }
 
 .contact-text span {
@@ -1677,7 +1664,6 @@ background-color: #fff;
 }
 .forgot-form label{ 
   display: none;
-
 }
 
 
