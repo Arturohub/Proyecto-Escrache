@@ -21,7 +21,7 @@ export default function Register() {
     const handleSubmit = async e =>{
         e.preventDefault()
         try{
-        const res = await axios.post("https://proyecto-escrache.onrender.com/auth/register", inputs)
+        const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", inputs)
             navigate("/login")
         }catch(err){
             setError(err.response.data)

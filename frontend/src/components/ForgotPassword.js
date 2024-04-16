@@ -11,7 +11,7 @@ export default function ForgotPassword() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://proyecto-escrache.onrender.com/auth/forgot-password', {
+      const response = await axios.post('https://proyecto-escrache.onrender.com/api/auth/forgot-password', {
         email,
       }, { withCredentials: true });
       setSuccessMessage(response.data);

@@ -26,7 +26,7 @@ export default function ResetPassword() {
 
     try {
       setLoading(true);
-      const response = await axios.post('https://proyecto-escrache.onrender.com/auth/reset-password', {
+      const response = await axios.post('https://proyecto-escrache.onrender.com/api/auth/reset-password', {
         token,
         password,
       }, { withCredentials: true });

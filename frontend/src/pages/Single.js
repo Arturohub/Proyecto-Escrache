@@ -23,7 +23,7 @@ export default function Single() {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const res = await axios.get(`https://proyecto-escrache.onrender.com/posts/${postId}`);
+            const res = await axios.get(`https://proyecto-escrache.onrender.com/api/posts/${postId}`);
             setPost(res.data);
           } catch (err) {
             console.log(err);
@@ -34,7 +34,7 @@ export default function Single() {
     
       const handleDelete = async ()=>{
         try {
-          await axios.delete(`https://proyecto-escrache.onrender.com/posts/${postId}`);
+          await axios.delete(`https://proyecto-escrache.onrender.com/api/posts/${postId}`);
           navigate("/")
         } catch (err) {
           console.log(err);

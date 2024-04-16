@@ -40,13 +40,13 @@ export default function Write() {
     
         try {
           state
-            ? await axios.put(`https://proyecto-escrache.onrender.com/posts/${state.id}`, {
+            ? await axios.put(`https://proyecto-escrache.onrender.com/api/posts/${state.id}`, {
                 title,
                 desc: value,
                 category,
                 img: imgUrl,
               })
-            : await axios.post(`https://proyecto-escrache.onrender.com/posts/`, {
+            : await axios.post(`https://proyecto-escrache.onrender.com/api/posts/`, {
                 title,
                 desc: value,
                 category,

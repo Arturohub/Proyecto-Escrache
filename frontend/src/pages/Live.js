@@ -28,7 +28,7 @@ export default function Live () {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const previousFestivals = await axios.get("https://proyecto-escrache.onrender.com/live/previouslive");
+                const previousFestivals = await axios.get("https://proyecto-escrache.onrender.com/api/live/previouslive");
                 setOldFestivals(previousFestivals.data)
             } catch (error) { 
                 setError(error.message);
@@ -40,7 +40,7 @@ export default function Live () {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const newFestivals = await axios.get("https://proyecto-escrache.onrender.com/live/upcominglive");
+                const newFestivals = await axios.get("https://proyecto-escrache.onrender.com/api/live/upcominglive");
                 setUpcomingFestivals(newFestivals.data)
             } catch (error) { 
                 setError(error.message);

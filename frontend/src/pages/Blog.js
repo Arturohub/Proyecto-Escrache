@@ -10,7 +10,7 @@ export default function Blog() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("https://proyecto-escrache.onrender.com/posts");
+                const res = await axios.get("https://proyecto-escrache.onrender.com/api/posts");
                 setPosts(res.data);
             } catch (error) { 
                 setError(error.message);
