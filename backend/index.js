@@ -12,7 +12,7 @@ const path = require("path");
 const app = express();
 
 app.use(cors({
-  origin: "https://proyectoescrache.onrender.com",
+  origin: ["https://proyectoescrache.onrender.com", "https://proyectoescrache.onrender.com/", "https://proyecto-escrache.onrender.com" ],
   credentials: true,
   exposedHeaders: ["Access-Control-Allow-Origin"]
 }));
