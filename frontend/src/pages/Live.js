@@ -61,8 +61,8 @@ export default function Live () {
     const upcomingFestivalsJSX = upcomingFestivals.map((festival, index) => (
         <div className="live-item" key={index}>
             <h2 className="title-live">{festival.festival_name}</h2>
-            <h3 className="city-live">Ciudad: {festival.city}</h3>
-            <h3 className="date-live">Fecha: {formatDateTime(festival.date)}</h3>
+            <h3 className="city-live">City: {festival.city}</h3>
+            <h3 className="date-live">Date: {formatDateTime(festival.date)}</h3>
             <h3 className="date-live">Time: {festival.time}</h3>
             <p className="daysuntil-live">Days until: {calculateDaysLeft(festival.date)}</p>
         </div>
