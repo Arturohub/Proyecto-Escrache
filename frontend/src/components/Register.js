@@ -29,20 +29,27 @@ export default function Register() {
             formData.append("email", inputs.email);
             formData.append("password", inputs.password);
             formData.append("img", inputs.img); 
-            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
+            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             navigate("/login");
         } catch (err) {
-            setError(err.response.data);
+            console.error("Error:", err);
+            if (err.response) {
+            
+                setError(err.response.data);
+            } else if (err.request) {
+        
+                setError("Network error. Please try again later.");
+            } else {
+                
+                setError("An unexpected error occurred. Please try again later.");
+            }
         }
     };
+    
 
     return (
         <div className="signup-container">
-            <form className="signupinfo-container">
+            <form className="signupinfo-container" encType="multipart/form-data">
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange} />
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange} />
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange} />
