@@ -24,7 +24,7 @@ export default function Write() {
         try {
             const formData = new FormData();
             formData.append("file", file);
-            const res = await axios.post("https://proyectoescrache.onrender.com/upload", formData);
+            const res = await axios.post("https://proyecto-escrache.onrender.com/api/public/upload", formData);
             return res.data;
         } catch (err) {
             console.log(err);

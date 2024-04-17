@@ -41,7 +41,7 @@ const login = (req, res) => {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, data[0].password);
         if (!isPasswordCorrect) return res.status(400).json("Incorrect password. Please, try again!");
 
-        const token = jwt.sign({ id: data[0].id }, "jwtkey");
+        const token = jwt.sign({ id: data[0].id }, process.env.JWT_SECRET);
         const { password, ...other } = data[0];
 
         res.cookie("access_token", token, { httpOnly: true, path: "/", sameSite:"None", secure:true }).status(200).json(other);
@@ -66,7 +66,7 @@ const forgotPassword = (req, res) => {
             return res.status(404).json("User not found. Please register first!");
         }
 
-        const resetToken = jwt.sign({ email: req.body.email }, "resetTokenSecret", { expiresIn: "1h" });
+        const resetToken = jwt.sign({ email: req.body.email }, process.env.RESET_TOKEN_SECRET, { expiresIn: "1h" });
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -101,7 +101,7 @@ const forgotPassword = (req, res) => {
 const resetPassword = (req, res) => {
     const { token, password } = req.body;
 
-    jwt.verify(token, "resetTokenSecret", async (err, decodedToken) => {
+    jwt.verify(token, process.env.RESET_TOKEN_SECRET, async (err, decodedToken) => {
         if (err) {
             return res.status(400).json("Invalid or expired token. Please try again.");
         }

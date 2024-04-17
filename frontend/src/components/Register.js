@@ -32,20 +32,9 @@ export default function Register() {
             const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             navigate("/login");
         } catch (err) {
-            console.error("Error:", err);
-            if (err.response) {
-            
-                setError(err.response.data);
-            } else if (err.request) {
-        
-                setError("Network error. Please try again later.");
-            } else {
-                
-                setError("An unexpected error occurred. Please try again later.");
-            }
+            setError(err.response.data);
         }
     };
-    
 
     return (
         <div className="signup-container">
@@ -53,7 +42,7 @@ export default function Register() {
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange} />
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange} />
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange} />
-                <input type="file" accept="img/*" required name="img" onChange={handleChange} />
+                <input type="file" accept="image/*" required name="img" onChange={handleChange} />
                 <button onClick={handleSubmit} type="submit">Create a new account</button>
                 {error && <p>{error}</p>}
             </form>

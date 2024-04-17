@@ -7,7 +7,7 @@ const authRoutes = require("./routes/auth");
 const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contact");
 const liveRoutes = require("./routes/live");
-const path = require("path"); // Import path module
+const path = require("path"); 
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/upload', express.static(path.join(__dirname, 'public/upload'))); 
+app.use('/api/public/upload', express.static(path.join(__dirname, 'public/upload'))); 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/api/upload", upload.single("file"), function (req, res) {
+app.post("/api/public/upload", upload.single("file"), function (req, res) {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
@@ -40,6 +40,7 @@ app.post("/api/upload", upload.single("file"), function (req, res) {
   const file = req.file;
   return res.status(200).json(file.filename);
 });
+
 
 
 app.use("/api/auth", authRoutes);
