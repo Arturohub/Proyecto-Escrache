@@ -17,7 +17,7 @@ export default function Register() {
 
     const handleChange = (e) => {
         if (e.target.name === 'img') {
-            setInputs(prev => ({...prev, profilePic: e.target.files[0]}))
+            setInputs(prev => ({...prev, img: e.target.files[0]}))
         } else {
             setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
         }
@@ -28,7 +28,7 @@ export default function Register() {
         try{
             const formData = new FormData();
             Object.keys(inputs).forEach(key => formData.append(key, inputs[key]));
-            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData)
+            await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData)
             navigate("/login")
         }catch(err){
             setError(err.response.data)

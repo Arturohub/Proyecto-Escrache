@@ -23,7 +23,7 @@ app.use('/api/public/upload', express.static(path.join(__dirname, 'public/upload
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'public/upload')); 
+    cb(null, 'public/upload'); 
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
@@ -40,7 +40,7 @@ const upload = multer({
   }
 });
 
-app.post("/api/public/upload", upload.single("file"), function (req, res) {
+app.post("/upload", upload.single("file"), function (req, res) {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
