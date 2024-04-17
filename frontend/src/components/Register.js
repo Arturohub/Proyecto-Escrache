@@ -32,9 +32,14 @@ export default function Register() {
             const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             navigate("/login");
         } catch (err) {
-            setError(err.response.data);
+            if (err && err.response && err.response.data) {
+                setError(err.response.data);
+            } else {
+                setError("An error occurred");
+            }
         }
     };
+    
 
     return (
         <div className="signup-container">
