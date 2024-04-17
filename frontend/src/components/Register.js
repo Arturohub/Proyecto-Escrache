@@ -28,7 +28,7 @@ export default function Register() {
         try{
             const formData = new FormData();
             Object.keys(inputs).forEach(key => formData.append(key, inputs[key]));
-            await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData)
+            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData)
             navigate("/login")
         }catch(err){
             setError(err.response.data)
