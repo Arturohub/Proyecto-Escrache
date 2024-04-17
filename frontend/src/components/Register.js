@@ -1,4 +1,3 @@
-import pe from "../images/login/pe.jpg"
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
@@ -23,12 +22,29 @@ export default function Register() {
         }
     }
 
+    const uploadImageToImgur = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("image", inputs.img);
+            const res = await axios.post("https://api.imgur.com/3/image", formData, {
+                headers: {
+                    Authorization: `Client-ID ${process.env.REACT_APP_CLIENT_ID}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            return res.data.data.link;
+        } catch (err) {
+            console.log(err);
+            throw new Error("Failed to upload image to Imgur");
+        }
+    };
+
     const handleSubmit = async e =>{
         e.preventDefault()
         try{
-            const formData = new FormData();
-            Object.keys(inputs).forEach(key => formData.append(key, inputs[key]));
-            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData)
+            const imgUrl = inputs.img ? await uploadImageToImgur() : null;
+            const userData = { ...inputs, img: imgUrl };
+            const res = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", userData)
             navigate("/login")
         }catch(err){
             setError(err.response.data)

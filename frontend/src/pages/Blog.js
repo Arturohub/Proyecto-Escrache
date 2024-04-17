@@ -34,7 +34,7 @@ export default function Blog() {
                     posts.map((post) => (
                         <div className="blogs-blog" key={post.id}>
                             <div className="img-blog">
-                                <Link to={`/post/${post.id}`}><img src={`../upload/${post.img}`} alt="" /></Link>
+                                <Link to={`/post/${post.id}`}><img src={`${post.img}`} alt="" /></Link>
                             </div>
                             <div className="content-blog">
                             <h1>{post.title}</h1>

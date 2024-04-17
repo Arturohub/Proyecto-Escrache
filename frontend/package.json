@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "dompurify": "^3.0.11",
+    "dotenv": "^16.4.5",
     "font-awesome": "^4.7.0",
     "gi": "^1.0.0",
     "jsonwebtoken": "^9.0.2",

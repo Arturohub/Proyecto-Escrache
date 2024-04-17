@@ -7,6 +7,7 @@ import moment from "moment"
 import { AuthContext } from '../context/authContext';
 import DOMPurify from "dompurify";
 
+
 axios.defaults.withCredentials = true;
 
 export default function Single() {
@@ -44,7 +45,7 @@ export default function Single() {
     return (
         <div className="blogpost-container">
             <div className="content-blogpost">
-                <img className="image-blogspot" src={`../upload/${post?.img}`} alt="" />
+                <img className="image-blogspot" src={`${post?.img}`} alt="" />
                 <div className="user-blogpost">
                     {post.userImg && <img className="user-picture" src={post.userImg} alt="" />}
                     <div className="info-blogpost">
