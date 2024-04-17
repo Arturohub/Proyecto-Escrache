@@ -13,12 +13,12 @@ const register = (req, res) => {
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(req.body.password, salt)
 
-        const q2 = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)"
+        const q2 = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?)"
         const values = [
             req.body.username,
             req.body.email,
             hash,
-            req.body.img ? req.body.img.path : null
+            req.body.img
         ]
 
         db.query(q2, [values], (err,data)=> {
