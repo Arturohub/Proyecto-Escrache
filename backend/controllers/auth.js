@@ -23,7 +23,7 @@ const register = (req, res) => {
         const insertq = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?)"
         const values = [ username, email, hash, img]
 
-        db.query(insertq, values, (err,data)=> {
+        db.query(insertq, [values], (err,data)=> {
             if(err) return res.json(err)
             return res.status(200).json("User has been created successfully")
         })
