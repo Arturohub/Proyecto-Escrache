@@ -28,6 +28,7 @@ export default function Write() {
             return res.data;
         } catch (err) {
             console.error("Error uploading image:", err);
+            throw err;
         }
     };
    
