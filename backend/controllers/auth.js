@@ -11,8 +11,8 @@ const register = (req, res) => {
     const img = req.file.filename; 
 
     const q = "SELECT * FROM users WHERE email=? OR username = ?"
-    db.query(q,[req.body.email, req.body.username], (err,data)=>{
-        if(err) return res.json(err)
+    db.query(q, [req.body.email, req.body.username], (err,data) => {
+        if(err) return res.status(500).json(err);
         if(data.length) return res.status(409).json("User already exists")
 
         const salt = bcrypt.genSaltSync(10)
@@ -27,7 +27,7 @@ const register = (req, res) => {
         ]
 
         db.query(q, [values], (err,data)=> {
-            if(err) return res.json(err)
+            if(err) return res.status(500).json(err);
             return res.status(200).json("User has been created successfully")
         })
     })
@@ -37,7 +37,7 @@ const login = (req, res) => {
 
     const q = "SELECT * FROM users WHERE username = ?";
     db.query(q, [req.body.username], (err, data) => {
-        if (err) return res.json(err);
+        if (err) return res.status(500).json(err);
         
         if (data.length === 0) {
             return res.status(404).json("User not found. Please register first!");
@@ -49,14 +49,14 @@ const login = (req, res) => {
         const token = jwt.sign({ id: data[0].id }, process.env.JWT_SECRET);
         const { password, ...other } = data[0];
 
-        res.cookie("access_token", token, { httpOnly: true, path: "/", sameSite:"None", secure:true }).status(200).json(other);
+        res.cookie("access_token", token, { httpOnly: true }).status(200).json(other);
     });
 };
 
 
 const logout = (req, res) => {
     res.clearCookie("access_token", {
-        sameSite:"None",
+        sameSite:"none",
         secure:true
     }).status(200).json("User has been logout")
 }
@@ -65,7 +65,7 @@ const forgotPassword = (req, res) => {
 
     const q = "SELECT * FROM users WHERE email = ?";
     db.query(q, [req.body.email], (err, data) => {
-        if (err) return res.json(err);
+        if (err) return res.status(500).json(err);
 
         if (data.length === 0) {
             return res.status(404).json("User not found. Please register first!");
