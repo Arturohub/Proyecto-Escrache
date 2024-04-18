@@ -2,36 +2,46 @@ const db = require("../db");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer");
+const imgur = require('imgur');
+const fs = require('fs');
 
-const register = (req, res) => {
-    if (!req.file) {
+
+const register = async (req, res) => {
+    try {
+      if (!req.files || !req.files.image) {
         return res.status(400).json({ message: "No file uploaded" });
+      }
+  
+      const imageFile = req.files.image;
+      const tempPath = imageFile.tempFilePath;
+  
+
+      const { data } = await imgur.uploadFile(tempPath);
+      const imageUrl = data.link;
+  
+
+      fs.unlinkSync(tempPath);
+  
+      const q = "SELECT * FROM users WHERE email=? OR username = ?";
+      db.query(q, [req.body.email, req.body.username], (err, data) => {
+        if (err) return res.status(500).json(err);
+        if (data.length) return res.status(409).json("User already exists");
+  
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(req.body.password, salt);
+  
+        const insertQuery = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
+        const values = [req.body.username, req.body.email, hash, imageUrl];
+  
+        db.query(insertQuery, values, (err, data) => {
+          if (err) return res.status(500).json(err);
+          return res.status(200).json("User has been created successfully");
+        });
+      });
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to upload image to Imgur.' });
     }
-
-    const img = req.file.filename; 
-
-    const q = "SELECT * FROM users WHERE email=? OR username = ?"
-    db.query(q, [req.body.email, req.body.username], (err,data) => {
-        if(err) return res.status(500).json(err);
-        if(data.length) return res.status(409).json("User already exists")
-
-        const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(req.body.password, salt)
-
-        const q = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?)"
-        const values = [
-            req.body.username,
-            req.body.email,
-            hash,
-            img
-        ]
-
-        db.query(q, [values], (err,data)=> {
-            if(err) return res.status(500).json(err);
-            return res.status(200).json("User has been created successfully")
-        })
-    })
-}
+  };
 
 const login = (req, res) => {
 

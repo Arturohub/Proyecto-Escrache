@@ -16,8 +16,8 @@ export default function Register() {
     const navigate = useNavigate();
     
     const handleChange = (e) => {
-        if (e.target.name === "img") {
-            setInputs({ ...inputs, [e.target.name]: e.target.files[0] });
+        if (e.target.name === "image") {
+            setInputs({ ...inputs, img: e.target.files[0] });
         } else {
             setInputs({ ...inputs, [e.target.name]: e.target.value });
         }
@@ -25,22 +25,26 @@ export default function Register() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const formData = new FormData();
-        Object.keys(inputs).forEach((key) => formData.append(key, inputs[key]));
-    
+        formData.append("username", inputs.username);
+        formData.append("email", inputs.email);
+        formData.append("password", inputs.password);
+        formData.append("image", inputs.img);
+        
         try {
             const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             if (response.data) {
                 navigate("/login");
             }
-            } catch (error) {
-                setError(error.response.data);
-            }
-        };
+        } catch (error) {
+            setError(error.response.data);
+        }
+    };
     
     return (
         <div className="signup-container">
-            <form className="signupinfo-container" encType="multipart/form-data">
+            <form className="signupinfo-container" action="/upload" method="POST" encType="multipart/form-data">
                 <img src={pe} alt="log in" />
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange}/>
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange}/>
