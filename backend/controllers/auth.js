@@ -8,7 +8,6 @@ const register = (req, res) => {
         return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { username, email, password } = req.body;
     const img = req.file.filename; 
 
     const q = "SELECT * FROM users WHERE email=? OR username = ?"
@@ -107,7 +106,7 @@ const forgotPassword = (req, res) => {
 const resetPassword = (req, res) => {
     const { token, password } = req.body;
 
-    jwt.verify(token, "resetTokenSecret", async (err, decodedToken) => {
+    jwt.verify(token, process.env.RESET_TOKEN_SECRET, async (err, decodedToken) => {
         if (err) {
             return res.status(400).json("Invalid or expired token. Please try again.");
         }
@@ -118,7 +117,7 @@ const resetPassword = (req, res) => {
         const updateQuery = "UPDATE users SET password = ? WHERE email = ?";
         db.query(updateQuery, [hashedPassword, decodedToken.email], (updateErr, updateResult) => {
             if (updateErr) {
-                return res.status(500).json("Failed to update password. Please try again later.");
+                return res.status(500).json({ error: "Failed to send reset email.", details: error.message });
             }
             return res.status(200).json("Password updated successfully.");
         });

@@ -7,7 +7,7 @@ const authRoutes = require("./routes/auth");
 const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contact");
 const liveRoutes = require("./routes/live");
-const path = require("path"); // Import path module
+
 
 const app = express();
 
