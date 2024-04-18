@@ -19,8 +19,6 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads'))); 
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads"); },
@@ -32,7 +30,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-app.post("/api/upload", upload.single("file"), function (req, res) {
+app.post("/api/uploads", upload.single("file"), function (req, res) {
   if (!req.file) {
     res.status(400).json({ message: "No file uploaded" });
   }
