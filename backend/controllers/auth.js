@@ -3,30 +3,63 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer");
 
-const register = (req, res) => {
+const register = async (req, res) => {
+    try {
+        if (!req.files || !req.files.img) {
+            return res.status(400).send('No image file uploaded.');
+        }
 
-    const q1 = "SELECT * FROM users WHERE email=? OR username = ?"
-    db.query(q1,[req.body.email, req.body.username], (err,data)=>{
-        if(err) return res.json(err)
-        if(data.length) return res.status(409).json("User already exists")
+        const imgFile = req.files.img;
+        const uploadPath = __dirname + '/../uploads/' + imgFile.name;
 
-        const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(req.body.password, salt)
+        imgFile.mv(uploadPath, async function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
 
-        const q2 = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?)"
-        const values = [
-            req.body.username,
-            req.body.email,
-            hash,
-            req.body.img
-        ]
+            try {
+                const urlObject = await imgur.uploadFile(uploadPath);
+                fs.unlinkSync(uploadPath); // Remove the uploaded file after uploading to Imgur
 
-        db.query(q2, [values], (err,data)=> {
-            if(err) return res.json(err)
-            return res.status(200).json("User has been created successfully")
-        })
-    })
-}
+                // Now you can use the urlObject.link as the image URL
+                const imgUrl = urlObject.link;
+
+                // Proceed with user registration, including imgUrl
+                // Insert user data into the database
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(req.body.password, salt);
+
+                const q1 = "SELECT * FROM users WHERE email=? OR username = ?";
+                db.query(q1, [req.body.email, req.body.username], (err, data) => {
+                    if (err) return res.json(err);
+                    if (data.length) return res.status(409).json("User already exists");
+
+                    const q2 = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?)";
+                    const values = [
+                        req.body.username,
+                        req.body.email,
+                        hash,
+                        imgUrl
+                    ];
+
+                    db.query(q2, [values], (err, data) => {
+                        if (err) return res.json(err);
+                        return res.status(200).json("User has been created successfully");
+                    });
+                });
+            } catch (imgurErr) {
+                console.error("Error uploading to Imgur:", imgurErr);
+                fs.unlinkSync(uploadPath); // Remove the uploaded file if Imgur upload fails
+                return res.status(500).send("Error uploading to Imgur");
+            }
+        });
+    } catch (err) {
+        console.error("Error handling file upload:", err);
+        return res.status(500).send("Error handling file upload");
+    }
+};
+
+    
 
 const login = (req, res) => {
 
