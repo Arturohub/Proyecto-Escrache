@@ -16,7 +16,7 @@ export default function Register() {
     const navigate = useNavigate();
     
     const handleChange = (e) => {
-        if (e.target.name === "image") {
+        if (e.target.name === "img") {
             setInputs({ ...inputs, [e.target.name]: e.target.files[0] });
         } else {
             setInputs({ ...inputs, [e.target.name]: e.target.value });
