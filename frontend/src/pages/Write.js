@@ -20,27 +20,22 @@ export default function Write() {
 
     const navigate = useNavigate()
 
-    const upload = async () => {
+    const uploadImage = async () => {
         try {
             const formData = new FormData();
-            formData.append("image", file);
-            const res = await axios.post("https://api.imgur.com/3/image", formData, {
-                headers: {
-                    Authorization: `Client-ID ${process.env.REACT_APP_CLIENT_ID}`,
-                    "Content-Type": "multipart/form-data"
-                }
-            });
-            return res.data.data.link; 
+            formData.append("file", file);
+            const res = await axios.post("https://proyecto-escrache.onrender.com/api/uploads", formData);
+            return res.data;
         } catch (err) {
-            console.log(err);
+            console.error("Error uploading image:", err);
         }
     };
-
+   
     const handleClick = async (e) => {
         e.preventDefault();
         let imgUrl = ""
         if (file) {
-            imgUrl = await upload()
+            imgUrl = await uploadImage()
         }
 
         try {
