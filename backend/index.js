@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-
 require("dotenv/config");
 const postRoutes = require("./routes/posts");
 const authRoutes = require("./routes/auth");
@@ -8,12 +7,10 @@ const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contact");
 const liveRoutes = require("./routes/live");
 const fileUpload = require("express-fileupload")
-const imgur = require('imgur');
-const fs = require('fs');
+
 
 
 const app = express();
-app.use(fileUpload())
 
 app.use(cors({
   origin: "https://proyectoescrache.onrender.com",
@@ -22,9 +19,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json());
-
-
-
+app.use(fileUpload())
 
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);

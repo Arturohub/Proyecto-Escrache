@@ -44,12 +44,12 @@ export default function Register() {
     
     return (
         <div className="signup-container">
-            <form className="signupinfo-container" action="/upload" method="POST" encType="multipart/form-data">
+            <form className="signupinfo-container">
                 <img src={pe} alt="log in" />
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange}/>
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange}/>
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange}/>
-                <input type="file" required name="image" accept="image/*" onChange={handleChange}/>
+                <input type="file" required name="image"  onChange={handleChange}/>
                 <button onClick={handleSubmit} type="submit">Create a new account</button>
                 {error && <p>{error}</p>}
             </form>

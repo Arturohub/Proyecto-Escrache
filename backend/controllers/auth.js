@@ -7,39 +7,42 @@ const fs = require('fs');
 
 
 const register = async (req, res) => {
+    
     try {
-      if (!req.files || !req.files.image) {
-        return res.status(400).json({ message: "No file uploaded" });
-      }
-  
-      const imageFile = req.files.image;
-      const tempPath = imageFile.tempFilePath;
-  
+        const { username, email } = req.body;
+        const picture = req.file;
 
-      const { data } = await imgur.uploadFile(tempPath);
-      const imageUrl = data.link;
-  
-
-      fs.unlinkSync(tempPath);
-  
-      const q = "SELECT * FROM users WHERE email=? OR username = ?";
-      db.query(q, [req.body.email, req.body.username], (err, data) => {
-        if (err) return res.status(500).json(err);
-        if (data.length) return res.status(409).json("User already exists");
-  
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
-  
-        const insertQuery = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
-        const values = [req.body.username, req.body.email, hash, imageUrl];
-  
-        db.query(insertQuery, values, (err, data) => {
-          if (err) return res.status(500).json(err);
-          return res.status(200).json("User has been created successfully");
+        const imgurResponse = await axios.post('https://api.imgur.com/3/image', {
+            image: fs.readFileSync(picture.path, { encoding: 'base64' }),
+            type: 'base64',
+        }, {
+            headers: {
+                Authorization: process.env.CLIENT_ID,
+            },
         });
-      });
+
+        const imgUrl = imgurResponse.data.data.link;
+
+        const q = "SELECT * FROM users WHERE email=? OR username = ?";
+        db.query(q, [req.body.email, req.body.username], (err, data) => {
+            if (err) return res.status(500).json({ error: err });
+
+            if (data.length) return res.status(409).json("User already exists");
+
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(req.body.password, salt);
+
+            const insertQuery = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
+            const values = [req.body.username, req.body.email, hash, imgUrl];
+
+            db.query(insertQuery, values, (err, data) => {
+                if (err) return res.status(500).json({ error: err });
+                return res.status(200).json("User has been created successfully");
+            });
+        });
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to upload image to Imgur.' });
+        console.error(error);
+        return res.status(500).json({ error: 'Failed to upload image to Imgur.' });
     }
   };
 
