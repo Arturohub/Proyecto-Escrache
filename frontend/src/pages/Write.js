@@ -44,13 +44,13 @@ export default function Write() {
                     title,
                     desc: value,
                     category,
-                    img: imgUrl,
+                    img: file ? imgUrl : ""
                 })
                 : await axios.post(`https://proyecto-escrache.onrender.com/api/posts/`, {
                     title,
                     desc: value,
                     category,
-                    img: imgUrl,
+                    img: file ? imgUrl : "",
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
                 });
             navigate("/blog")
