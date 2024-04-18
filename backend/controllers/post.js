@@ -25,7 +25,7 @@ const addPost = (req, res) => {
     const token = req.cookies.access_token;
     if (!token) return res.status(401).json("Not authenticated!");
 
-    jwt.verify(token, "jwtkey", (err, userInfo) => {
+    jwt.verify(token, process.env.JWT_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     if (![1, 2, 3, 4].includes(userInfo.id)) {
@@ -54,7 +54,7 @@ const deletePost = (req, res) => {
     const token = req.cookies.access_token;
     if (!token) return res.status(401).json("Not authenticated!");
   
-    jwt.verify(token, "jwtkey", (err, userInfo) => {
+    jwt.verify(token, process.env.JWT_KEY, (err, userInfo) => {
       if (err) return res.status(403).json("Token is not valid!");
   
       const postId = req.params.id;
@@ -79,7 +79,7 @@ const updatePost = (req, res) => {
     const token = req.cookies.access_token;
     if (!token) return res.status(401).json("Not authenticated!");
 
-    jwt.verify(token, "jwtkey", (err, userInfo) => {
+    jwt.verify(token, process.env.JWT_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const postId = req.params.id;
