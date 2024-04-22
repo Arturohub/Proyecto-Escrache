@@ -31,9 +31,8 @@ export default function Register() {
             const response = await axios.post("https://api.imgur.com/3/image", formData, {
                 headers: {
                     Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
-                    Accept: "application/json"
+                    Accept: "application/json",
                 },
-                withCredentials: true
             });
             
             return response.data.data.link;
@@ -55,9 +54,7 @@ export default function Register() {
             formData.append("password", inputs.password);
             formData.append("image", imgUrl);
             
-            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData, {
-                withCredentials: true
-            });
+            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             if (response.data) {
                 navigate("/login");
             }
