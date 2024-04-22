@@ -34,7 +34,9 @@ export default function Register() {
             }
     
             console.log('Uploading image to Cloudinary...');
-            const response = await axios.post(cloudinaryUrl, formData);
+            const response = await axios.post(cloudinaryUrl, formData, {
+                headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Credentials': 'true' }
+            });
             console.log('Image uploaded successfully:', response.data.secure_url);
             return response.data.secure_url;
         } catch (error) {
