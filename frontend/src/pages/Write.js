@@ -20,20 +20,18 @@ export default function Write() {
 
     const navigate = useNavigate()
 
-    const uploadImage = async () => {
+    const uploadImg = async (imageFile) => {
         try {
             const formData = new FormData();
-            formData.append('image', file);
-            const response = await axios.post('https://api.imgur.com/3/image', formData, {
-                headers: {
-                    Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`, 
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            return response.data.data.link;
+            formData.append("file", imageFile);
+            formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+            const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
+            const response = await axios.post(cloudinaryUrl, formData);
+            console.log('Image uploaded successfully:', response.data.secure_url);
+            return response.data.secure_url;
         } catch (error) {
-            console.error('Error uploading image to Imgur:', error);
-            throw error;
+            console.error('Failed to upload image to Cloudinary:', error);
+            throw new Error("Failed to upload image to Cloudinary.");
         }
     };
    
@@ -41,7 +39,7 @@ export default function Write() {
         e.preventDefault();
         let imgUrl = ""
         if (file) {
-            imgUrl = await uploadImage()
+            imgUrl = await uploadImg(file)
         }
 
         try {
@@ -74,7 +72,7 @@ export default function Write() {
             <div className="content-blogform">
                 <input type="text" value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
                 <div className="newblog-container">
-                    <ReactQuill className="newblog-editor" theme="snow" value={value} onChange={setValue} />;
+                    <ReactQuill className="newblog-editor" theme="snow" value={value} onChange={setValue} />
                 </div>
             </div>
             <div className="menu-blogform">
