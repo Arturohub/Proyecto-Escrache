@@ -6,30 +6,20 @@ const getPosts = (req, res) => {
     const q = req.query.category ? "SELECT * FROM posts WHERE category=? ORDER BY date DESC" : "SELECT * FROM posts ORDER BY date DESC"
 
     db.query(q, [req.query.category], (err,data) => {
-        if (err) {
-          console.error("Error retrieving posts:", err);
-          return res.status(500).json("Internal Server Error");
-        } 
+        if (err) return res.status(500).send(err)
 
         return res.status(200).json(data)
     })
 }
 
 const getPost = (req, res) => {
-  const q = "SELECT p.id, `username`, `title`, `desc`, p.image , u.image AS userImg, `category`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
+    const q = "SELECT p.id,`username`, `title`, `desc`, p.image , u.image AS userImg, `category`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
 
-  db.query(q, [req.params.id], (err, data) => {
-      if (err) {
-          console.error("Error retrieving post:", err);
-          return res.status(500).json("Internal Server Error");
-      }
+    db.query(q, [req.params.id], (err, data) => {
+        if(err) return res.status(500).json(err);
 
-      if (data.length === 0) {
-          return res.status(404).json("Post not found");
-      }
-
-      return res.status(200).json(data[0]);
-  });
+        return res.status(200).json(data[0]);
+    });
 };
 
 const addPost = (req, res) => {
