@@ -31,6 +31,7 @@ export default function Register() {
             const response = await axios.post("https://api.imgur.com/3/image", formData, {
                 headers: {
                     Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+                    Accept: "application/json"
                 },
             });
             
