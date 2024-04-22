@@ -1,5 +1,6 @@
 const db = require("../db");
 const jwt = require("jsonwebtoken")
+const axios = require("axios")
 
 const getPosts = (req, res) => {
     const q = req.query.category ? "SELECT * FROM posts WHERE category=? ORDER BY date DESC" : "SELECT * FROM posts ORDER BY date DESC"

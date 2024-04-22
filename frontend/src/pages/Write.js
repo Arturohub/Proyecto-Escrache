@@ -23,12 +23,17 @@ export default function Write() {
     const uploadImage = async () => {
         try {
             const formData = new FormData();
-            formData.append("file", file);
-            const res = await axios.post("https://proyecto-escrache.onrender.com/api/uploads", formData);
-            return res.data;
-        } catch (err) {
-            console.error("Error uploading image:", err);
-            throw err;
+            formData.append('image', file);
+            const response = await axios.post('https://api.imgur.com/3/image', formData, {
+                headers: {
+                    Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`, 
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            return response.data.data.link;
+        } catch (error) {
+            console.error('Error uploading image to Imgur:', error);
+            throw error;
         }
     };
    
@@ -81,7 +86,7 @@ export default function Write() {
                     <span>
                         <b>Visibility: </b> Public
                     </span>
-                    <input style={{ display: "none" }} type="file" name="" id="file" onChange={(e) => setFile(e.target.files[0])} />
+                    <input style={{ display: "none" }} type="file" accept="image/*" name="" id="file" onChange={(e) => setFile(e.target.files[0])} />
                     <label className="file-blogform" htmlFor='file'>Upload Image</label>
                     <div className="buttons-blogform">
                         <button onClick={handleClick}>Publish</button>
