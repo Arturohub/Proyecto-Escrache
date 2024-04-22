@@ -26,7 +26,7 @@ export default function Write() {
             formData.append("file", imageFile);
             formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
             const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
-            const response = await axios.post(cloudinaryUrl, formData);
+            const response = await axios.post(cloudinaryUrl, formData, { withCredentials: false });
             console.log('Image uploaded successfully:', response.data.secure_url);
             return response.data.secure_url;
         } catch (error) {
