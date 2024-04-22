@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Proyecto-Escrache/static/css/main.4b3edb9c.css",
+    "main.js": "/Proyecto-Escrache/static/js/main.99dc5a78.js",
+    "static/media/cantante.jpg": "/Proyecto-Escrache/static/media/cantante.a596aead9e334feed805.jpg",
+    "static/media/bajo.jpg": "/Proyecto-Escrache/static/media/bajo.9e5e12447cf88e219d75.jpg",
+    "static/media/guitarra.jpg": "/Proyecto-Escrache/static/media/guitarra.accbbad49ead4a1c0deb.jpg",
+    "static/media/bateria.jpg": "/Proyecto-Escrache/static/media/bateria.58a26c07b0fc2b67ac9b.jpg",
+    "static/media/profile.jpg": "/Proyecto-Escrache/static/media/profile.9f2243d628672a3c54eb.jpg",
+    "static/media/pe.jpg": "/Proyecto-Escrache/static/media/pe.b403960cab05d4db4b19.jpg",
+    "static/media/tshirt.jpg": "/Proyecto-Escrache/static/media/tshirt.9af6a15e1f67c1f691f8.jpg",
+    "index.html": "/Proyecto-Escrache/index.html",
+    "main.4b3edb9c.css.map": "/Proyecto-Escrache/static/css/main.4b3edb9c.css.map",
+    "main.99dc5a78.js.map": "/Proyecto-Escrache/static/js/main.99dc5a78.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4b3edb9c.css",
+    "static/js/main.99dc5a78.js"
+  ]
+}
