@@ -59,7 +59,7 @@ export default function Register() {
             formData.append("password", inputs.password);
             formData.append("image", imgUrl);
             
-            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
+            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData, { headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Credentials': 'true' } });
             if (response.data) {
                 navigate("/login");
             }
