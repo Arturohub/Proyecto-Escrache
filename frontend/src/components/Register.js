@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.withCredentials = false;
+
 
 export default function Register() {
     const [inputs, setInputs] = useState({
@@ -15,6 +15,14 @@ export default function Register() {
 
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+        axios.defaults.withCredentials = false;
+        return () => {
+            axios.defaults.withCredentials = true;
+        };
+    }, []);
 
     const handleChange = (e) => {
         if (e.target.name === "image") {
