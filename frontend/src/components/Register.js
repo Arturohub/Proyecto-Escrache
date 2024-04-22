@@ -28,8 +28,13 @@ export default function Register() {
             formData.append("file", imageFile);
             formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
     
+            const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
+            if (!cloudinaryUrl) {
+                throw new Error("REACT_APP_CLOUDINARY_URL is not defined in your environment variables.");
+            }
+    
             console.log('Uploading image to Cloudinary...');
-            const response = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, formData);
+            const response = await axios.post(cloudinaryUrl, formData);
             console.log('Image uploaded successfully:', response.data.secure_url);
             return response.data.secure_url;
         } catch (error) {
@@ -37,6 +42,7 @@ export default function Register() {
             throw new Error("Failed to upload image to Cloudinary.");
         }
     };
+    
     
 
     const handleSubmit = async (e) => {
