@@ -16,7 +16,7 @@ export default function Register() {
 
     const handleChange = (e) => {
         if (e.target.name === "image") {
-            setInputs({ ...inputs, image: e.target.files[0] }); // Changed from "img" to "image"
+            setInputs({ ...inputs, image: e.target.files[0] });
         } else {
             setInputs({ ...inputs, [e.target.name]: e.target.value });
         }
@@ -27,20 +27,23 @@ export default function Register() {
             const formData = new FormData();
             formData.append("file", imageFile);
             formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
-
+    
+            console.log('Uploading image to Cloudinary...');
             const response = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, formData);
+            console.log('Image uploaded successfully:', response.data.secure_url);
             return response.data.secure_url;
         } catch (error) {
-            console.error(error);
+            console.error('Failed to upload image to Cloudinary:', error);
             throw new Error("Failed to upload image to Cloudinary.");
         }
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
-            const imgUrl = await uploadImg(inputs.image); // Changed from "img" to "image"
+            const imgUrl = await uploadImg(inputs.image);
             
             const formData = new FormData();
             formData.append("username", inputs.username);
@@ -53,9 +56,15 @@ export default function Register() {
                 navigate("/login");
             }
         } catch (error) {
-            setError(error.response.data);
+
+            if (error.response) {
+                setError(error.response.data);
+            } else {
+                setError("An error occurred while registering.");
+            }
         }
     };
+    
     
     return (
         <div className="signup-container">
@@ -64,7 +73,7 @@ export default function Register() {
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange}/>
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange}/>
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange}/>
-                <input type="file" required name="image" onChange={handleChange}/> {/* Keep name as "image" */}
+                <input type="file" required name="image" onChange={handleChange}/>
                 <button onClick={handleSubmit} type="submit">Create a new account</button>
                 {error && <p>{error}</p>}
             </form>
