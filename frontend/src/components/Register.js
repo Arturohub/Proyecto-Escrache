@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.withCredentials = false;
+
 export default function Register() {
     const [inputs, setInputs] = useState({
         username: "",
@@ -34,9 +36,7 @@ export default function Register() {
             }
     
             console.log('Uploading image to Cloudinary...');
-            const response = await axios.post(cloudinaryUrl, formData, {
-                headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Credentials': 'true' }
-            });
+            const response = await axios.post(cloudinaryUrl, formData);
             console.log('Image uploaded successfully:', response.data.secure_url);
             return response.data.secure_url;
         } catch (error) {
@@ -59,7 +59,7 @@ export default function Register() {
             formData.append("password", inputs.password);
             formData.append("image", imgUrl);
             
-            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData, { headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Credentials': 'true' } });
+            const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             if (response.data) {
                 navigate("/login");
             }
