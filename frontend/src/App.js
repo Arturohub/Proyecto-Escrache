@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home"
 import About from './pages/About';
 import Blog from './pages/Blog';
@@ -17,7 +17,7 @@ import NewLive from "./components/NewLive"
 
 function App() {
   return (
-      <Router>
+      <BrowserRouter>
         <Navbar />
 
         <Routes>
@@ -37,7 +37,7 @@ function App() {
 
         </Routes>
 
-      </Router>
+      </BrowserRouter>
   );
 }
 
