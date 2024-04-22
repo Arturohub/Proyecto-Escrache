@@ -13,6 +13,7 @@ axios.defaults.withCredentials = true;
 export default function Single() {
 
     const [post, setPost] = useState({});
+    const [error, setError] = useState(null);
 
     const location = useLocation()
     const postId = location.pathname.split("/")[2]
@@ -27,11 +28,15 @@ export default function Single() {
             const res = await axios.get(`https://proyecto-escrache.onrender.com/api/posts/${postId}`);
             setPost(res.data);
           } catch (err) {
-            console.log(err);
+            setError("Sorry, failed to fetch post!")
           }
         };
         fetchData();
       }, [postId]);
+
+      if (error) {
+        return <div className="error">Error: {error}</div>
+      }
     
       const handleDelete = async ()=>{
         try {
@@ -39,6 +44,7 @@ export default function Single() {
           navigate("/")
         } catch (err) {
           console.log(err);
+          setError("Sorry, failed to delete post!")
         }
       }
     

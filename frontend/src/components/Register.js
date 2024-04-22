@@ -22,17 +22,37 @@ export default function Register() {
             setInputs({ ...inputs, [e.target.name]: e.target.value });
         }
     };
+
+    const uploadImg = async (image) => {
+        const formData = new FormData();
+        formData.append("image", image);
+        
+        try {
+            const response = await axios.post("https://api.imgur.com/3/image", formData, {
+                headers: {
+                    Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+                },
+            });
+            
+            return response.data.data.link;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Failed to upload image to Imgur.");
+        }
+    };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append("username", inputs.username);
-        formData.append("email", inputs.email);
-        formData.append("password", inputs.password);
-        formData.append("image", inputs.img);
-        
+
         try {
+            const imgUrl = await uploadImg(inputs.img);
+            
+            const formData = new FormData();
+            formData.append("username", inputs.username);
+            formData.append("email", inputs.email);
+            formData.append("password", inputs.password);
+            formData.append("image", imgUrl);
+            
             const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             if (response.data) {
                 navigate("/login");

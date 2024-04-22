@@ -4,38 +4,26 @@ const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer");
 const imgur = require('imgur');
 const fs = require('fs');
+const axios = require("axios")
 
 
 const register = async (req, res) => {
-    
     try {
-        const { username, email } = req.body;
-        const picture = req.file;
+        const { username, email, password, image } = req.body;
 
-        const imgurResponse = await axios.post('https://api.imgur.com/3/image', {
-            image: fs.readFileSync(picture.path, { encoding: 'base64' }),
-            type: 'base64',
-        }, {
-            headers: {
-                Authorization: process.env.CLIENT_ID,
-            },
-        });
-
-        const imgUrl = imgurResponse.data.data.link;
-
-        const q = "SELECT * FROM users WHERE email=? OR username = ?";
-        db.query(q, [req.body.email, req.body.username], (err, data) => {
+        const checkQ = "SELECT * FROM users WHERE email=? OR username = ?";
+        db.query(checkQ, [email, username], (err, data) => {
             if (err) return res.status(500).json({ error: err });
 
             if (data.length) return res.status(409).json("User already exists");
 
             const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(req.body.password, salt);
+            const hash = bcrypt.hashSync(password, salt);
 
-            const insertQuery = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
-            const values = [req.body.username, req.body.email, hash, imgUrl];
+            const insertQ = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
+            const values = [username, email, hash, image];
 
-            db.query(insertQuery, values, (err, data) => {
+            db.query(insertQ, values, (err, data) => {
                 if (err) return res.status(500).json({ error: err });
                 return res.status(200).json("User has been created successfully");
             });
@@ -44,7 +32,7 @@ const register = async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: 'Failed to upload image to Imgur.' });
     }
-  };
+};
 
 const login = (req, res) => {
 
