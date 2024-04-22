@@ -38,7 +38,7 @@ const addPost = (req, res) => {
     const values = [
       req.body.title,
       req.body.desc,
-      req.body.img,
+      req.body.image,
       req.body.category,
       req.body.date,
       userInfo.id,
