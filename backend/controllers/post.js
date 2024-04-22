@@ -1,6 +1,6 @@
 const db = require("../db");
 const jwt = require("jsonwebtoken")
-const axios = require("axios")
+
 
 const getPosts = (req, res) => {
     const q = req.query.category ? "SELECT * FROM posts WHERE category=? ORDER BY date DESC" : "SELECT * FROM posts ORDER BY date DESC"
@@ -13,7 +13,7 @@ const getPosts = (req, res) => {
 }
 
 const getPost = (req, res) => {
-    const q = "SELECT p.id,`username`, `title`, `desc`, p.img , u.img AS userImg, `category`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
+    const q = "SELECT p.id,`username`, `title`, `desc`, p.image , u.image AS userImg, `category`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ";
 
     db.query(q, [req.params.id], (err, data) => {
         if(err) return res.status(500).json(err);
@@ -33,12 +33,12 @@ const addPost = (req, res) => {
       return res.status(403).json("You are not authorized to publish blog posts.");
   }
 
-    const q = "INSERT INTO posts(`title`, `desc`, `img`, `category`, `date`,`uid`) VALUES (?)";
+    const q = "INSERT INTO posts(`title`, `desc`, `image`, `category`, `date`,`uid`) VALUES (?)";
 
     const values = [
       req.body.title,
       req.body.desc,
-      req.body.img,
+      req.body.image,
       req.body.category,
       req.body.date,
       userInfo.id,
@@ -84,9 +84,9 @@ const updatePost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const postId = req.params.id;
-    const q = "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`category`=? WHERE `id` = ? AND `uid` = ?";
+    const q = "UPDATE posts SET `title`=?,`desc`=?,`image`=?,`category`=? WHERE `id` = ? AND `uid` = ?";
 
-    const values = [req.body.title, req.body.desc, req.body.img, req.body.category];
+    const values = [req.body.title, req.body.desc, req.body.image, req.body.category];
 
     db.query(q, [...values, postId, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);

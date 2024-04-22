@@ -2,9 +2,6 @@ const db = require("../db");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer");
-const imgur = require('imgur');
-const fs = require('fs');
-const axios = require("axios")
 
 
 const register = async (req, res) => {
@@ -20,7 +17,8 @@ const register = async (req, res) => {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
 
-            const insertQ = "INSERT INTO users(`username`, `email`, `password`, `img`) VALUES (?, ?, ?, ?)";
+            // Use `image` instead of `img` as the column name in your database
+            const insertQ = "INSERT INTO users(`username`, `email`, `password`, `image`) VALUES (?, ?, ?, ?)";
             const values = [username, email, hash, image];
 
             db.query(insertQ, values, (err, data) => {
@@ -30,9 +28,10 @@ const register = async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to upload image to Imgur.' });
+        return res.status(500).json({ error: 'Failed to register user.' });
     }
 };
+
 
 const login = (req, res) => {
 
