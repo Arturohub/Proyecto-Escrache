@@ -13,7 +13,7 @@ const fileUpload = require("express-fileupload")
 const app = express();
 
 app.use(cors({
-  origin: ["https://proyectoescrache.onrender.com", "https://api.imgur.com/3/image"],
+  origin: ["https://proyectoescrache.onrender.com", "https://api.imgur.com/3/image", "http://localhost:3000"],
   credentials: true,
   exposedHeaders: ["Access-Control-Allow-Origin"]
 }));
