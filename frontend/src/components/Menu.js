@@ -25,7 +25,7 @@ export default function Menu({ category }) {
             {posts.map((post) => (
                 <div className="posts-menu" key={post.id}>
                     <Link to={`/post/${post.id}`}>
-                        <img src={`../upload/${post?.img}`} />
+                        <img src={post?.image} />
                     </Link>
                     <h2>{post.title}</h2>
                     <Link to={`/post/${post.id}`}>

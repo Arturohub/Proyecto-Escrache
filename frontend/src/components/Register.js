@@ -12,7 +12,8 @@ export default function Register() {
         password: "",
         image: null, 
     });
-
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -39,17 +40,14 @@ export default function Register() {
             formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
     
             const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
-            if (!cloudinaryUrl) {
-                throw new Error("REACT_APP_CLOUDINARY_URL is not defined in your environment variables.");
-            }
-    
-            console.log('Uploading image to Cloudinary...');
+   
+            console.log("Uploading image to Cloudinary...");
             const response = await axios.post(cloudinaryUrl, formData);
-            console.log('Image uploaded successfully:', response.data.secure_url);
+            setSuccess("Image uploaded successfully!");
             return response.data.secure_url;
         } catch (error) {
-            console.error('Failed to upload image to Cloudinary:', error);
-            throw new Error("Failed to upload image to Cloudinary.");
+            console.error("Failed to upload image to Cloudinary:", error);
+            setError("Failed to upload image to Cloudinary. Please, try again later")
         }
     };
     
@@ -57,6 +55,7 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitted(true);
     
         try {
             const imgUrl = await uploadImg(inputs.image);
@@ -76,7 +75,7 @@ export default function Register() {
             if (error.response) {
                 setError(error.response.data);
             } else {
-                setError("An error occurred while registering.");
+                setError("An error occurred while registering. Please, reload the page and try again");
             }
         }
     };
@@ -91,7 +90,8 @@ export default function Register() {
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange}/>
                 <input type="file" required name="image" onChange={handleChange}/>
                 <button onClick={handleSubmit} type="submit">Create a new account</button>
-                {error && <p>{error}</p>}
+                {error && <p className="error">{error}</p>}
+                {success && <p className="success">{success}</p>}
             </form>
         </div>
     );
