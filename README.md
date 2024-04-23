@@ -6,7 +6,7 @@ Hereby my lattest creation. This is a gift to my cousin, who plays in a band cal
 
 I designed his website to see if they hire me as their Manager hehe
 
-It has user authentification, it is connected to a free mySQL database, it has their own blog, their own New Concerts display, their own shop display...I am quite happy with the final results, especially considering that I am working and studying/learning by myself in my free time
+It has user authentification, it is connected to a free mySQL database, it has their own Blog, their own New Concerts display, their own shop display...I am quite happy with the final results, especially considering that I am working and studying/learning by myself in my free time
 
 I don't know what will come next. I only know that the journey continues!
 
