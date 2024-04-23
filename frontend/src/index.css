@@ -608,7 +608,7 @@
   color: black;
   background-color: rgba(58, 92, 245, 0.8);
   border: 1px double #fff;
-  transform: scale(1.15); /* Correct scale property */
+  transform: scale(1.15);
 }
 
 @media (max-width: 880px) { 

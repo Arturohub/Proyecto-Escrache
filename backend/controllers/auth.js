@@ -17,7 +17,6 @@ const register = async (req, res) => {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
 
-            // Use `image` instead of `img` as the column name in your database
             const insertQ = "INSERT INTO users(`username`, `email`, `password`, `image`) VALUES (?, ?, ?, ?)";
             const values = [username, email, hash, image];
 
