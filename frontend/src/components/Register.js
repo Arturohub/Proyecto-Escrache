@@ -88,7 +88,7 @@ export default function Register() {
                 <input type="text" placeholder="Enter username" required name="username" onChange={handleChange}/>
                 <input type="email" placeholder="Enter email" required name="email" onChange={handleChange}/>
                 <input type="password" placeholder="Enter password" required name="password" onChange={handleChange}/>
-                <input type="file" required name="image" onChange={handleChange} /><label htmlFor="image">Upload Image</label>
+                <input type="file" required name="image" onChange={handleChange} />
                 <button onClick={handleSubmit} type="submit">Create a new account</button>
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}

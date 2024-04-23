@@ -1596,17 +1596,13 @@ background-color: #fff;
   color: white;
   font-size: 1.2rem;
 }
-.signupinfo-container label{
-  width: 100%;
-  padding: 15px;
+.signupinfo-container input[type="file"]{
+  background-color: #fff;
+  padding: 5px;
   margin-bottom: 15px;
-  border: 1px solid black;
-  box-shadow: 0 0 3px black;
-  border-radius: 5px;
-  box-sizing: border-box;
-  color: white;
-  font-size: 1.2rem;
+
 }
+
 
 .signupinfo-container button {
   width: 100%;
