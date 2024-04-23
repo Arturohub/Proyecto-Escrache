@@ -68,7 +68,8 @@ export default function Register() {
             
             const response = await axios.post("https://proyecto-escrache.onrender.com/api/auth/register", formData);
             if (response.data) {
-                navigate("/write");
+                setSuccess("New User created!");
+                navigate("/login");
             }
         } catch (error) {
 
