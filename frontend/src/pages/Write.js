@@ -17,6 +17,8 @@ export default function Write() {
     const [title, setTitle] = useState(state?.title || "");
     const [file, setFile] = useState(state?.img || null);
     const [category, setCat] = useState(state?.category || "");
+    const [isClicked, setIsClicked] = useState(false);
+    const [uploadMessage, setUploadMessage] = useState("")
 
     const navigate = useNavigate()
 
@@ -28,15 +30,17 @@ export default function Write() {
             const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
             const response = await axios.post(cloudinaryUrl, formData, { withCredentials: false });
             console.log('Image uploaded successfully:', response.data.secure_url);
+            setUploadMessage("Image uploaded successfully!");
             return response.data.secure_url;
         } catch (error) {
             console.error('Failed to upload image to Cloudinary:', error);
-            throw new Error("Failed to upload image to Cloudinary.");
+            setUploadMessage("Error uploading image. Please try again later.");
         }
     };
    
     const handleClick = async (e) => {
         e.preventDefault();
+        setIsClicked(true);
         let imgUrl = ""
         if (file) {
             imgUrl = await uploadImg(file)
@@ -84,11 +88,12 @@ export default function Write() {
                     <span>
                         <b>Visibility: </b> Public
                     </span>
-                    <input style={{ display: "none" }} type="file" accept="image/*" name="" id="file" onChange={(e) => setFile(e.target.files[0])} />
+                    <input style={{ display: "none" }} type="file" accept="image/*" name="" id="file" disabled={isClicked} onChange={(e) => setFile(e.target.files[0])} />
                     <label className="file-blogform" htmlFor='file'>Upload Image</label>
                     <div className="buttons-blogform">
                         <button onClick={handleClick}>Publish</button>
                     </div>
+                    {uploadMessage && <p style={{ color: uploadMessage.includes("Error") ? "red" : "green" }}>{uploadMessage}</p>}
                 </div>
                 <div className="item-blogform">
                     <h1>Category</h1>
