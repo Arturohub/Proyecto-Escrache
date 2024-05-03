@@ -8,7 +8,6 @@ export default function ResetPassword() {
   const token = searchParams.get('token');
 
   useEffect(() => {
-    console.log("Token:", token);
   }, [token]);
 
   const [password, setPassword] = useState('');
