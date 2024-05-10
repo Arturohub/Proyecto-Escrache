@@ -1,19 +1,18 @@
-import { useState } from "react"
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
+import { AuthContext } from "../context/authContext";
 
-export default function NewLive () {
-
-    const [festival, setFestival] = useState("")
-    const [city, setCity] = useState("")
-    const [date, setDate] = useState("")
-    const [time, setTime] = useState("")
+export default function NewLive() {
+    const [festival, setFestival] = useState("");
+    const [city, setCity] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
     const [error, setError] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    
-    
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { currentUser } = useContext(AuthContext);
 
     const axiosPostData = async () => {
         const postData = {
@@ -28,14 +27,12 @@ export default function NewLive () {
             setError(<p className="success">New upcoming concert sent!</p>);
             setSubmitted(true);
         } catch (error) {
-            if(error.response && error.response.data === "Not authenticated!") {
+            if (error.response && error.response.data === "Not authenticated!") {
                 setError(<p className="error">You must log in if you want to publish new concerts</p>);
-            } else{
+            } else {
                 setError(<p className="error">Failed to send new upcoming concert! Please, try again :D</p>);
             }
-            
         }
-
     };
 
     const handleSubmit = async (e) => {
@@ -48,10 +45,11 @@ export default function NewLive () {
             setButtonDisabled(true);
             await axiosPostData();
             setButtonDisabled(false);
-            navigate("/live")
+            navigate("/live");
         }
     };
 
+    if (currentUser && (currentUser.username === "arturo" || currentUser.username === "dani")) {
         return (
             <div className="newlive-container">
                 <h1>Add Upcoming Concert</h1>
@@ -65,4 +63,7 @@ export default function NewLive () {
                 </form>
             </div>
         );
+    } else {
+        return null; 
     }
+}
