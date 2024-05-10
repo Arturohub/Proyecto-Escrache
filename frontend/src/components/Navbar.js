@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
 import pe from "../images/login/pe.jpg"
 import { AuthContext } from '../context/authContext';
