@@ -789,6 +789,8 @@
 .menu-container{
  display: flex;
  flex-direction: column;
+ align-items: center;
+ justify-content: center;
  gap: 30px;
  padding: 30px;
 }
@@ -803,6 +805,7 @@
 }
 .posts-menu img{
   max-width: 300px;
+  
 }
 .posts-menu h2{
   padding: 5px 0px;

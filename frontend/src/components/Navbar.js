@@ -18,6 +18,20 @@ export default function Navbar() {
     navigate('/');
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!navbarRef.current.contains(event.target) && !event.target.closest('.dropdown-content')) {
+        setMenu(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="navbar">
       <Link to="/"><img src={pe} alt="PE logo"/></Link> 
