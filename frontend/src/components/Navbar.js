@@ -8,7 +8,8 @@ export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
   const { currentUser, logout } = useContext(AuthContext);
-
+  const navbarRef = useRef(null);
+  
   const appearMenu = () => {
     setMenu(!menu);
   };
